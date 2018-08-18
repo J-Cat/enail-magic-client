@@ -34,6 +34,8 @@ export class Home extends React.Component<Home.IProps, Home.IState> {
         } catch (exc) {
             this.setState({status: 'Error getting Bluetooth status.'});
         }
+
+        
     }
 
     public render() {

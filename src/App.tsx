@@ -1,17 +1,26 @@
 import * as React from 'react';
 import { Router } from 'react-router-dom';
+import { Store } from 'redux';
+import { Provider } from 'react-redux';
 
 import './App.css';
 
 import history from './history';
 import CoreLayout from './layouts/coreLayout';
+import { configureStore } from './store/createStore';
+import { IEMStore } from './models/IEMStore';
+
+const initialState = window.__INITIAL_STATE__;
+const store: Store<IEMStore> = configureStore(initialState);ß
 
 class App extends React.Component {
   public render() {
     return (
-      <Router history={history}>
-        <CoreLayout />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <CoreLayout />
+        </Router>
+      </Provider>
     );
   }
 }
