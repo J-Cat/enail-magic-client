@@ -11,7 +11,7 @@ import { configureStore } from './store/createStore';
 import { IEMStore } from './models/IEMStore';
 
 const initialState = window.__INITIAL_STATE__;
-const store: Store<IEMStore> = configureStore(initialState);ß
+const store: Store<IEMStore> = configureStore(initialState);
 
 class App extends React.Component {
   public render() {
