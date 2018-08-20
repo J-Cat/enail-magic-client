@@ -1,7 +1,7 @@
 import { Action } from 'redux';
 import { IEMData } from './IEMData';
 
-export type EMAction = IEMBleAction & IEMConnectBleAction & IEMUpdateBleConnectionAction & IEMBleDataAction & IEMBleResponseAction;
+export type EMAction = IEMBleAction & IEMConnectBleAction & IEMUpdateBleConnectionAction & IEMBleDataAction & IEMBleChunkedAction;
 
 export interface IEMConnectBleAction extends IEMBleAction {
     connectionPromise: Promise<{deviceId: string, characteristics: string[]}>;
@@ -20,6 +20,12 @@ export interface IEMBleAction extends Action {
     error?: string;
 }
 
-export interface IEMBleResponseAction extends IEMBleAction {
-    value: any
+export interface IEMBleChunkedRequestAction extends IEMBleAction {
+    key: string;
+}
+
+export interface IEMBleChunkedAction extends IEMBleAction {
+    key: string;
+    complete: boolean;
+    chunk: string;
 }

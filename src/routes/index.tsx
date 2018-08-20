@@ -8,8 +8,8 @@ export class Routes extends React.Component {
     public render() {
         return (
             <Switch>
-                <Route path="/home" component={Home} />
-                <Route path="/profiles" component={Profiles} />
+              <Route path="/profiles" component={Profiles} />
+              <Route component={Home} />
             </Switch>
         )
     }

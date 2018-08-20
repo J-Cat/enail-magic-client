@@ -1,6 +1,6 @@
 import { Dispatch, Store } from 'redux';
 import { arrayBufferToString, stringToArrayBuffer } from '../helpers/arrayBuffer';
-import { updateBleConnection, completeBleReadRequest, getProfiles } from '../modules/enailMagic';
+import { updateBleConnection, getProfiles } from '../modules/enailMagic';
 import { IEMStore } from '../models/IEMStore';
 
 import * as EMConstants from '../modules/constants';
@@ -22,17 +22,17 @@ export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(ne
         }
 
         default: {
-            if (typeof action.type === "string") {
-                if ((action.type as string).startsWith(EMConstants.EM_FROMCLIENT_PREFIX)) {
+            try {
+                if (action.type.startsWith(EMConstants.EM_FROMCLIENT_PREFIX)) {
                     ble.writeWithoutResponse(
                         bleSettings.deviceId, EMConstants.EM_SERVICE_UUID, action.uuid, 
                         stringToArrayBuffer(JSON.stringify(
                             action
                         ))
                     );
-                } else if ((action.type as string) === EMConstants.EM_READBLE_REQUEST) {
-                    readBleData(store, action.uuid);
                 }
+            } catch (e) {
+                alert(e);
             }
         }
     }
@@ -40,15 +40,6 @@ export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(ne
     const result = next(action);
     return result;
 };
-
-const readBleData = (store: Store<IEMStore>, uuid: string) => {
-    ble.read(bleSettings.deviceId, EMConstants.EM_SERVICE_UUID, uuid, (rawData: ArrayBuffer) => {
-        const s = arrayBufferToString(rawData);
-        const obj: { type: string, value: any} = JSON.parse(s);
-        store.dispatch(completeBleReadRequest(uuid, obj.value));
-        
-    });
-}
 
 const connectBle = (store: Store<IEMStore>): Promise<{deviceId: string, characteristics: string[]}> => {
     const blePromise: Promise<{deviceId: string, characteristics: string[]}> = new Promise<{deviceId: string, characteristics: string[]}>((resolve, reject) => {
@@ -58,22 +49,24 @@ const connectBle = (store: Store<IEMStore>): Promise<{deviceId: string, characte
           } else {
               ble.isEnabled(() => {
                   ble.startScan([EMConstants.EM_SERVICE_UUID], (data: BLECentralPlugin.PeripheralData) => {
-                      const deviceId: string = data.id;
-          
-                      ble.connect(deviceId, (extendedData: BLECentralPlugin.PeripheralDataExtended) => {
-                          const characteristics: string[] = extendedData.characteristics.map((characteristic) => (
-                              characteristic.characteristic
-                          ));
-          
-                          resolve({
-                            characteristics,
-                            deviceId
-                          });
-                      }, () => {
-                          throw new Error('Error connecting to Bluetooth LE device.');
-                      });
+                    ble.stopScan();
+                    const deviceId: string = data.id;
+                    
+                    ble.connect(deviceId, (extendedData: BLECentralPlugin.PeripheralDataExtended) => {
+                        const characteristics: string[] = extendedData.characteristics.map((characteristic) => (
+                            characteristic.characteristic
+                        ));
+
+                        resolve({
+                        characteristics,
+                        deviceId
+                        });
+                    }, () => {
+                        throw new Error('Error connecting to Bluetooth LE device.');
+                    });
                   }, () => {
-                      throw new Error('Error scanning Bluetooth LE for device.');
+                    ble.stopScan();
+                    throw new Error('Error scanning Bluetooth LE for device.');
                   });
               }, () => {
                   throw new Error('Bluetooth LE is not enabled.');
@@ -81,38 +74,37 @@ const connectBle = (store: Store<IEMStore>): Promise<{deviceId: string, characte
           }
       } catch (e) {
           console.log(`No Bluetooth LE available: ${e.message}`);
-          resolve({ deviceId: '', characteristics: [] });
+          // resolve({ deviceId: '', characteristics: [] });
       }
   });
 
   blePromise.then(({deviceId, characteristics}) => {
     if (deviceId !== '') {
-      bleSettings.deviceId = deviceId;
-      bleSettings.characteristics = characteristics;
-      for (const characteristic in bleSettings.characteristics) {
-        if (!!!characteristic)  {
-          ble.startNotification(
-            bleSettings.deviceId, 
-            EMConstants.EM_SERVICE_UUID,
-            characteristic,
-            (rawData: ArrayBuffer) => {
-              const s = arrayBufferToString(rawData);
-              store.dispatch(
-                JSON.parse(s)
-              );
-            },
-            () => {
-              store.dispatch({
-                error: 'Error starting bluetooth notification',
-                type: 'PINAIL/ERROR'
-              });
-            }
-          );
-        }
-      }
+        bleSettings.deviceId = deviceId;
+        bleSettings.characteristics = characteristics;
+        // tslint:disable-next-line:forin
+        characteristics.forEach(characteristic => {
+            ble.startNotification(
+                bleSettings.deviceId, 
+                EMConstants.EM_SERVICE_UUID,
+                characteristic,
+                (rawData: ArrayBuffer) => {
+                    const s = arrayBufferToString(rawData);
+                    store.dispatch(
+                    JSON.parse(s)
+                    );
+                },
+                () => {
+                    store.dispatch({
+                    error: 'Error starting bluetooth notification',
+                    type: 'PINAIL/ERROR'
+                    });
+                }
+            );
+        });
 
-      store.dispatch(updateBleConnection(1));
-      store.dispatch(getProfiles());
+        store.dispatch(updateBleConnection(1));
+        store.dispatch(getProfiles());
 //      api.dispatch(getSettings());
     }
   });

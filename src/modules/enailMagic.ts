@@ -1,8 +1,8 @@
 import { ActionCreator } from 'redux';
 import { IEMState } from '../models/IEMState';
-import { EMAction, IEMBleAction, IEMUpdateBleConnectionAction, IEMBleDataAction } from '../models/IEMAction';
+import { EMAction, IEMBleAction, IEMUpdateBleConnectionAction, IEMBleDataAction, IEMBleChunkedRequestAction } from '../models/IEMAction';
 import * as EMConstants from './constants';
-import { IProfile } from '../models/IProfile';
+import { Guid } from '../helpers/guid';
 
 // initial state
 const initialState: IEMState = {
@@ -12,7 +12,9 @@ const initialState: IEMState = {
         stepIndex: 0,
         temperature: 0
     },
-    profiles: []
+    profiles: [],
+    readData: {},
+    connected: false
 };
 
 // action creators
@@ -31,18 +33,11 @@ export const updateBleConnection: ActionCreator<IEMUpdateBleConnectionAction> = 
     };
 }
 
-export const getProfiles: ActionCreator<IEMBleAction> = () => {
+export const getProfiles: ActionCreator<IEMBleChunkedRequestAction> = () => {
     return {
-        type: EMConstants.EM_READBLE_REQUEST,
-        uuid: EMConstants.EM_PROFILES_CHARACTERISTIC_UUID
-    };
-}
-
-export const completeBleReadRequest: ActionCreator<IEMBleAction> = (uuid: string, value: any) => {
-    return {
-        type: EMConstants.EM_READBLE_RESPONSE,
-        uuid,
-        value
+        type: EMConstants.EM_FROMCLIENT_GETPROFILES,
+        uuid: EMConstants.EM_PROFILES_CHARACTERISTIC_UUID,
+        key: Guid.newGuid()
     };
 }
 
@@ -50,6 +45,9 @@ export const enailMagicReducer = (state: IEMState = initialState, action: EMActi
     switch (action.type) {
         case EMConstants.EM_CONNECT_BLE_ACTION: {
             return Object.assign({}, state, {
+                connecting: {
+                    [action.uuid]: true
+                },
                 data: Object.assign({}, state.data, {
                     status: 0
                 })
@@ -58,27 +56,33 @@ export const enailMagicReducer = (state: IEMState = initialState, action: EMActi
 
         case EMConstants.EM_UPDATE_BLE_CONNECTION: {
             return Object.assign({}, state, {
-                data: Object.assign({}, state.data, {
-                    status: (action as IEMUpdateBleConnectionAction).connectionStatus
+                data: Object.assign({}, state, {
+                    connected: (action as IEMUpdateBleConnectionAction).connectionStatus
                 })
             });
         }
 
-        case EMConstants.EM_READBLE_RESPONSE: {
-            switch (action.uuid) {
-                case EMConstants.EM_PROFILES_CHARACTERISTIC_UUID: {
-                    return Object.assign({}, state, {
-                        profiles: (action.value as IProfile[])
-                    });
-                }
-
-                default: {
-                    return state;
-                }
+        case EMConstants.EM_FROMSERVER_PROFILES: {
+            const profilesStr: string = (!!state.readData[action.key] ? state.readData[action.key] : '') + action.chunk;
+            if (action.complete) {
+                const s: string = Buffer.from(profilesStr, 'base64').toString('utf8');
+                alert(s);
+                return Object.assign({}, state, {
+                    readData: Object.assign({}, state.readData, {
+                        [action.key]: undefined
+                    }),
+                    profiles: JSON.parse(s)
+                });
+            } else {
+                return Object.assign({}, state, {
+                    readData: Object.assign({}, state.readData, {
+                        [action.key]: profilesStr
+                    }),
+                });                
             }
         }
 
-        case EMConstants.EM_FROMSERVER_UPDATEDATA: {
+        case EMConstants.EM_FROMSERVER_DATA: {
             return Object.assign({}, state, {
                 data: (action as IEMBleDataAction).data
             });
