@@ -66,7 +66,6 @@ export const enailMagicReducer = (state: IEMState = initialState, action: EMActi
             const profilesStr: string = (!!state.readData[action.key] ? state.readData[action.key] : '') + action.chunk;
             if (action.complete) {
                 const s: string = Buffer.from(profilesStr, 'base64').toString('utf8');
-                alert(s);
                 return Object.assign({}, state, {
                     readData: Object.assign({}, state.readData, {
                         [action.key]: undefined

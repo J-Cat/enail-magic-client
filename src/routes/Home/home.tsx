@@ -29,6 +29,7 @@ export class Home extends React.Component<HomeProps.IProps, HomeProps.IState> {
         return (
             <div>
                 <div>{this.props.temperature}</div>
+                <div>{this.props.profiles.length > 0 ? this.props.profiles[0].title : ''}</div>
                 <br/>
                 <Button type="primary" onClick={(props) => {this.props.connectBle()}} disabled={this.props.connected}>Connect</Button>
                 <Button type="primary" onClick={(props) => {this.props.getProfiles()}}>Get Profiles</Button>

@@ -6,6 +6,8 @@
     "target": "es6",
     "lib": ["es6", "dom"],
     "sourceMap": true,
+    "inlineSources": false,
+    "inlineSourceMap": false,
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
@@ -18,7 +20,7 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-    "allowSyntheticDefaultImports":true,
+    "allowSyntheticDefaultImports":true
   },
   "exclude": [
     "node_modules",
@@ -30,6 +32,7 @@
     "acceptance-tests",
     "webpack",
     "jest",
-    "src/setupTests.ts"
+    "src/setupTests.ts",
+    "config-overrides.js"
   ]
 }

@@ -1,6 +1,6 @@
 import { Dispatch, Store } from 'redux';
 import { arrayBufferToString, stringToArrayBuffer } from '../helpers/arrayBuffer';
-import { updateBleConnection, getProfiles } from '../modules/enailMagic';
+import { updateBleConnection, getProfiles, connectBle } from '../modules/enailMagic';
 import { IEMStore } from '../models/IEMStore';
 
 import * as EMConstants from '../modules/constants';
@@ -17,7 +17,7 @@ const bleSettings: {
 export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(next: Dispatch<A>) => (action: A) => {
     switch (action.type) {    
         case EMConstants.EM_CONNECT_BLE_ACTION: {
-            action.connectionPromise = connectBle(store);
+            action.connectionPromise = connectBleAdapter(store);
             break;
         }
 
@@ -41,11 +41,14 @@ export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(ne
     return result;
 };
 
-const connectBle = (store: Store<IEMStore>): Promise<{deviceId: string, characteristics: string[]}> => {
+const connectBleAdapter = (store: Store<IEMStore>): Promise<{deviceId: string, characteristics: string[]}> => {
     const blePromise: Promise<{deviceId: string, characteristics: string[]}> = new Promise<{deviceId: string, characteristics: string[]}>((resolve, reject) => {
       try {
-          if (!ble) {
-              throw new Error('No Bluetooth LE available.');
+          if (window.cordova && !ble) {
+              setTimeout(() => {
+                  store.dispatch(connectBle(store));
+              }, 2000);
+              throw new Error('No Bluetooth LE available.  Trying again in a couple seconds.');
           } else {
               ble.isEnabled(() => {
                   ble.startScan([EMConstants.EM_SERVICE_UUID], (data: BLECentralPlugin.PeripheralData) => {
@@ -73,8 +76,14 @@ const connectBle = (store: Store<IEMStore>): Promise<{deviceId: string, characte
               });                        
           }
       } catch (e) {
-          console.log(`No Bluetooth LE available: ${e.message}`);
-          // resolve({ deviceId: '', characteristics: [] });
+          if (window.cordova) {
+              setTimeout(() => {
+                  store.dispatch(connectBle(store));
+                }, 
+                2000);
+                console.log('No Bluetooth LE available.  Trying again in a couple seconds.');
+                // resolve({ deviceId: '', characteristics: [] });
+          }
       }
   });
 
@@ -91,13 +100,13 @@ const connectBle = (store: Store<IEMStore>): Promise<{deviceId: string, characte
                 (rawData: ArrayBuffer) => {
                     const s = arrayBufferToString(rawData);
                     store.dispatch(
-                    JSON.parse(s)
+                        JSON.parse(s)
                     );
                 },
                 () => {
                     store.dispatch({
-                    error: 'Error starting bluetooth notification',
-                    type: 'PINAIL/ERROR'
+                        error: 'Error starting bluetooth notification',
+                        type: 'PINAIL/ERROR'
                     });
                 }
             );
