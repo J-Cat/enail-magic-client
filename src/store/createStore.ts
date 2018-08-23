@@ -41,12 +41,7 @@ export function configureStore(initialState?: IEMStore): Store<IEMStore> {
         });
         store.dispatch({
             type: EMConstants.EM_FROMSERVER_DATA,
-            data: {
-                temperature: 72,
-                status: 0,
-                profileIndex: 0,
-                stepIndex: 0
-            }
+            data: [72, 0, 0, 0]
         });
     }
 

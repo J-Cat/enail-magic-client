@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button } from 'antd-mobile';
 import { HomeProps } from './container';
+import { Carousel, WingBlank } from 'antd-mobile';
 
 export class Home extends React.Component<HomeProps.IProps, HomeProps.IState> {
     constructor(props: HomeProps.IProps) {
@@ -9,12 +9,18 @@ export class Home extends React.Component<HomeProps.IProps, HomeProps.IState> {
 
     public render() {
         return (
-            <div>
-                <div>{this.props.temperature}</div>
-                <br/>
-                <div>{this.props.profiles.length > 0 ? this.props.profiles[0].title : ''}</div>
-                <br/>
-            </div>
+            <WingBlank>
+                <Carousel   
+                    autoplay={false}
+                    infinite={true}
+                    beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
+                    afterChange={index => console.log('slide to', index)}
+                >
+                    {this.props.profiles.map((profile, index) => {
+                        return (<div style={{width: '100%', height: '100%'}} key={index}>{profile.title}</div>);
+                    })}
+                </Carousel>
+            </WingBlank>
         );
     }
 }

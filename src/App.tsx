@@ -4,6 +4,7 @@ import { Store } from 'redux';
 import { Provider } from 'react-redux';
 
 import './App.css';
+// import './antd-mobile.css';
 
 import history from './history';
 import CoreLayout from './layouts/coreLayout';
@@ -15,6 +16,7 @@ const store: Store<IEMStore> = configureStore(initialState);
 
 class App extends React.Component {
   public render() {
+//    alert('press any key to continue');
     return (
       <Provider store={store}>
         <Router history={history}>

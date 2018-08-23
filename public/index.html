@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
-    <meta http-equiv="Content-Security-Policy" content="default-src localhost 'unsafe-inline' 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' ws: wss: http://172.19.0.*; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src localhost 'unsafe-inline' 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' ws: wss: http:; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <!--
@@ -13,6 +13,7 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!-- <link rel="stylesheet" href="%PUBLIC_URL%/antd-mobile.min.css"> -->
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -40,5 +41,6 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
     <script type="text/javascript" src="cordova.js"></script>
+    <!-- <script type="text/javascript" src="antd-mobile.min.js"></script> -->
   </body>
 </html>

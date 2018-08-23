@@ -40,10 +40,14 @@
     "@types/redux": "^3.6.0",
     "@types/remote-redux-devtools": "^0.5.3",
     "babel-plugin-import": "^1.8.0",
+    "css-loader": "^1.0.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
     "react-app-rewire-less": "^2.1.2",
     "react-app-rewired": "^1.5.2",
     "remote-redux-devtools": "^0.5.13",
     "remotedev-server": "^0.2.5",
+    "style-loader": "^0.22.1",
     "ts-import-plugin": "^1.5.4",
     "typescript": "^3.0.1"
   },
@@ -58,5 +62,8 @@
     "platforms": [
       "ios"
     ]
+  },
+  "theme": {
+    "brand-primary": "red"
   }
 }

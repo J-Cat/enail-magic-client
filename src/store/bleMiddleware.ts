@@ -27,7 +27,7 @@ export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(ne
                     ble.writeWithoutResponse(
                         bleSettings.deviceId, EMConstants.EM_SERVICE_UUID, action.uuid, 
                         stringToArrayBuffer(JSON.stringify(
-                            [action.type.toString(10), action.key]
+                            [`0x${action.type.toString(16)}`, action.key]
                         ))
                     );
                 }
@@ -91,17 +91,22 @@ const connectBleAdapter = (store: Store<IEMStore>): Promise<{deviceId: string, c
     if (deviceId !== '') {
         bleSettings.deviceId = deviceId;
         bleSettings.characteristics = characteristics;
-        // tslint:disable-next-line:forin
         characteristics.forEach(characteristic => {
             ble.startNotification(
                 bleSettings.deviceId, 
                 EMConstants.EM_SERVICE_UUID,
                 characteristic,
                 (rawData: ArrayBuffer) => {
-                    const s = arrayBufferToString(rawData);
-                    store.dispatch(
-                        JSON.parse(s)
-                    );
+                    try {
+                        const s = arrayBufferToString(rawData);
+                        console.log(s);
+                        const json = Object.assign({}, { uuid: characteristic }, JSON.parse(s));
+                        store.dispatch(
+                            json
+                        );
+                    } catch (e) {
+                        alert(e);
+                    }
                 },
                 () => {
                     store.dispatch({

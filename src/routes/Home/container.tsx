@@ -2,7 +2,7 @@ import { IEMStore } from '../../models/IEMStore';
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Home } from './home';
-import { connectBle, getProfiles } from '../../modules/enailMagic';
+import { connectBle /*, getProfiles */ } from '../../modules/enailMagic';
 import { IProfile } from '../../models/IProfile';
 
 export namespace HomeProps {
@@ -14,7 +14,6 @@ export namespace HomeProps {
 
     export interface IDispatchProps {
         connectBle: () => void;
-        getProfiles: () => void;
     }
 
     export interface IOwnProps {
@@ -38,8 +37,7 @@ function mapStateToProps(state: IEMStore, ownProps: HomeProps.IOwnProps) {
 
 function mapDispatchToProps(dispatch: (...args: any[]) => void) {
     return {
-        connectBle: () => dispatch(connectBle()),
-        getProfiles: () => dispatch(getProfiles())
+        connectBle: () => dispatch(connectBle())
     };
 }
 

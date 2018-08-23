@@ -1,5 +1,4 @@
 import { Action } from 'redux';
-import { IEMData } from './IEMData';
 
 export type EMAction = IEMBleAction & IEMConnectBleAction & IEMUpdateBleConnectionAction & IEMBleDataAction & IEMBleChunkedAction;
 
@@ -15,7 +14,7 @@ export interface IEMBleDataAction extends IEMBleAction {
     data: number[];
 }
 
-export interface IEMBleAction extends Action {
+export interface IEMBleAction extends Action<string|number> {
     uuid: string;
     error?: string;
 }
