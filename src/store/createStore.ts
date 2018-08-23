@@ -1,24 +1,29 @@
-import { applyMiddleware, /*compose,*/ createStore, Store } from 'redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
-
-import { IEMStore } from '../models/IEMStore';
-import makeRootReducer from './reducers';
-import { connectBle } from '../modules/enailMagic';
-import { bleMiddleware } from './bleMiddleware';
 import * as EMConstants from '../modules/constants';
-import { IProfile } from '../models/IProfile';
+import makeRootReducer from './reducers';
+import {
+    applyMiddleware,
+    compose,
+    createStore,
+    Store
+} from 'redux';
+import { bleMiddleware } from './bleMiddleware';
+import { connectBle } from '../modules/enailMagic';
 import { Guid } from '../helpers/guid';
+import { IEMStore } from '../models/IEMStore';
+import { IProfile } from '../models/IProfile';
+// import { composeWithDevTools } from 'remote-redux-devtools';
+
 
 export function configureStore(initialState?: IEMStore): Store<IEMStore> {
     const middlewares: any = [
         bleMiddleware
     ];
 
-    // const composeEnhancers = (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
-    const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000, hostname: '172.19.0.29' })
+    const composeEnhancers = (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+    // const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000, hostname: '172.19.0.29' })
 
-    // const newState = initialState || {} as IEMStore;
-    const store: Store<IEMStore> = createStore(makeRootReducer, /* initialState,*/ 
+    const newState = initialState || {} as IEMStore;
+    const store: Store<IEMStore> = createStore(makeRootReducer, newState,         
         composeEnhancers(applyMiddleware(...middlewares))
     );
 

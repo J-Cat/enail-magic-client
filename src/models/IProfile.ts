@@ -1,6 +1,6 @@
 export interface IProfile {
     readonly title: string;
-    readonly steps: Array<ITemperatureStep | ITimeStep | ISwitchStep | ILEDStep | IIconStep>;
+    readonly steps: Array<ITemperatureStep | ITimeStep | ISwitchStep | ILEDStep | IIconStep | ISoundStep>;
 }
 
 export interface IStep {
@@ -28,7 +28,11 @@ export interface ILEDStep extends IStep {
     readonly flashSpeed: number;
 }
 
-export interface IIconStep {
+export interface IIconStep extends IStep {
     readonly icon: string;
     readonly flashRate: number;
+}
+
+export interface ISoundStep extends IStep {
+    readonly sound: string;
 }
