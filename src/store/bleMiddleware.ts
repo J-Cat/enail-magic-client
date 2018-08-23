@@ -23,11 +23,11 @@ export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(ne
 
         default: {
             try {
-                if (action.type.startsWith(EMConstants.EM_FROMCLIENT_PREFIX)) {
+                if (typeof action.type === "number") {
                     ble.writeWithoutResponse(
                         bleSettings.deviceId, EMConstants.EM_SERVICE_UUID, action.uuid, 
                         stringToArrayBuffer(JSON.stringify(
-                            action
+                            [action.type.toString(10), action.key]
                         ))
                     );
                 }

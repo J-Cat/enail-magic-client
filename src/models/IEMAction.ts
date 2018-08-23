@@ -12,7 +12,7 @@ export interface IEMUpdateBleConnectionAction extends IEMBleAction {
 }
 
 export interface IEMBleDataAction extends IEMBleAction {
-    data: IEMData;
+    data: number[];
 }
 
 export interface IEMBleAction extends Action {

@@ -7,10 +7,10 @@ import { Guid } from '../helpers/guid';
 // initial state
 const initialState: IEMState = {
     data: {
-        profileIndex: 0,
+        temperature: 0,
         status: 0,
-        stepIndex: 0,
-        temperature: 0
+        profileIndex: 0,
+        stepIndex: 0
     },
     profiles: [],
     readData: {},
@@ -82,8 +82,14 @@ export const enailMagicReducer = (state: IEMState = initialState, action: EMActi
         }
 
         case EMConstants.EM_FROMSERVER_DATA: {
+            const data: number[] = (action as IEMBleDataAction).data
             return Object.assign({}, state, {
-                data: (action as IEMBleDataAction).data
+                data: {
+                    temperature: data[0],
+                    status: data[1] === 1,
+                    profileIndex: data[2],
+                    stepIndex: data[3]
+                }
             });
         }
 

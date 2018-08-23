@@ -1,0 +1,17 @@
+npm WARN deprecated hoek@2.16.3: The major version is no longer supported. Please update to 4.x or newer
+npm WARN saveError ENOENT: no such file or directory, open '/Users/joe/.taco_home/node_modules/cordova/8.0.0/package.json'
+npm notice created a lockfile as package-lock.json. You should commit this file.
+npm WARN enoent ENOENT: no such file or directory, open '/Users/joe/.taco_home/node_modules/cordova/8.0.0/package.json'
+npm WARN 8.0.0 No description
+npm WARN 8.0.0 No repository field.
+npm WARN 8.0.0 No README data
+npm WARN 8.0.0 No license field.
+
++ cordova@8.0.0
+added 414 packages from 393 contributors, updated 1 package and audited 1727 packages in 46.009s
+found 11 vulnerabilities (1 low, 10 moderate)
+  run `npm audit fix` to fix them, or `npm audit` for details
+[1m[33mUse of cordova.raw.* methods is deprecated and cordova.raw will be removed in a future release. Please migrate to using the top-level cordova.* methods instead.
+[39m[22mNo scripts found for hook "before_plugin_add".
+Calling plugman.fetch on plugin "remote/plugins/cordova-plugin-ble-central"
+Failed to build app for buildNumber 39069: Cannot read property 'fail' of undefined
