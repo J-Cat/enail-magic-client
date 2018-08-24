@@ -8,19 +8,10 @@
             "type": "chrome",
             "request": "attach",
             "name": "Attach to Chrome",
+            "url": "http://localhost:3000",
             "port": 9222,
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Launch via NPM",
-            "runtimeExecutable": "npm",
-            "runtimeArgs": [
-                "run-script",
-                "start"
-            ],
-            "port": 9229
+            "webRoot": "${workspaceFolder}",
+            "preLaunchTask": "debug"
         },
         {
             "name": "Run Android on device",

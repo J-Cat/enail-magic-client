@@ -3,6 +3,6 @@
     "plugins": [
       "add-module-exports",
       "transform-runtime",
-      ["import", { "style": "css", "libraryName": "antd-mobile", "libraryDirectory": "lib" }, "ant-mobile"]
+      ["import", { "style": true, "libraryName": "antd-mobile", "libraryDirectory": "es" }, "ant-mobile"]
     ]
   }

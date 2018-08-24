@@ -1,0 +1,32 @@
+/*
+ * File: c:\enail-magic-client\.vscode\tasks.json
+ * Project: c:\enail-magic-client
+ * Created Date: Thursday August 23rd 2018
+ * Author: J-Cat
+ * -----
+ * Last Modified:
+ * Modified By:
+ * -----
+ * License: 
+ *    This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 
+ *    International License (http://creativecommons.org/licenses/by-nc/4.0/).
+ * -----
+ * Copyright (c) 2018
+ */
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "debug",
+            "type": "npm",
+            "script": "start",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

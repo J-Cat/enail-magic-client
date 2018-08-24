@@ -1,0 +1,77 @@
+/*
+ * File: c:\enail-magic-client\src\routes\Home\home.less
+ * Project: c:\enail-magic-client
+ * Created Date: Thursday August 23rd 2018
+ * Author: J-Cat
+ * -----
+ * Last Modified:
+ * Modified By:
+ * -----
+ * License: 
+ *    This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 
+ *    International License (http://creativecommons.org/licenses/by-nc/4.0/).
+ * -----
+ * Copyright (c) 2018
+ */
+ @import '../../variables.less';
+
+.Home {
+    height: 100%;
+
+    .row1 {
+        padding: 80px;
+        flex: 1;
+    }
+    .row2{
+        padding: 30px;
+        flex: 0;
+        .am-card {
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+    .am-wingblank {
+        height: 100% !important;
+    }
+    .am-card {
+        height: 100% !important;
+        text-align: center;
+        align-content: stretch;
+        align-items: center;
+        flex-wrap: nowrap;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        .wing {
+            flex: 1;
+        }
+        .content {
+            flex: 0;
+        }
+    }
+    .am-carousel {
+        height: 100% !important;
+        .slider-frame {
+            height: 100% !important;
+            .slider-list {
+                height: 100% !important;
+                .slider-slide {
+                    height: 100% !important;
+                }
+            }
+        }
+    }
+
+    @media @small {
+        .row1,.row2 {
+            padding: 10px;
+        }
+    }
+
+    @media @medium {
+        .row1,.row2 {
+            padding: 20px;
+        }
+    }
+}

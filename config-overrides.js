@@ -2,6 +2,8 @@ const tsImportPluginFactory = require('ts-import-plugin');
 const { getLoader } = require('react-app-rewired');
 const rewireLess = require('react-app-rewire-less');
 
+// const theme = require('./package.json').theme;
+
 module.exports = function override(config, env) {
     const tsLoader = getLoader(
         config.module.rules,
@@ -14,7 +16,7 @@ module.exports = function override(config, env) {
     tsLoader.options = {
         getCustomTransformers: () => ({
             before: [ tsImportPluginFactory({
-            libraryDirectory: 'lib',
+            libraryDirectory: 'es',
             libraryName: 'antd-mobile',
             style: true,
             }) ]
@@ -22,7 +24,7 @@ module.exports = function override(config, env) {
     };
 
     config = rewireLess.withLoaderOptions({
-        modifyVars: { "@primary-color": "red" },
+        // modifyVars: theme,
         javascriptEnabled: true
     })(config, env);
 
