@@ -10,8 +10,7 @@
             "name": "Attach to Chrome",
             "url": "http://localhost:3000",
             "port": 9222,
-            "webRoot": "${workspaceFolder}",
-            "preLaunchTask": "debug"
+            "webRoot": "${workspaceFolder}"
         },
         {
             "name": "Run Android on device",

@@ -12,8 +12,6 @@ import './coreLayout.less';
 import { ICoreLayoutState } from './container';
 
 export class CoreLayout extends React.Component<RouteComponentProps<any>, ICoreLayoutState> {
-    private ptr: JSX.Element;
-
     constructor(props: any) {
         super(props);
 

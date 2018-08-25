@@ -77,7 +77,7 @@ export class Profile extends React.Component<ProfileProps.IProps, ProfileProps.I
             return;
         }
 
-        this.props.setStatus(this.props.status);
+        this.props.runProfile(this.props.profileIndex);
 
         this.postRunCommand();
     }
@@ -122,8 +122,10 @@ export class Profile extends React.Component<ProfileProps.IProps, ProfileProps.I
                 </div>
 
                 <div className="profile-content">
+                    <div className="wing" />
                     <div className="profile-content-title">{this.props.profile.title}</div>
                     <Button className="profile-content-button"><FontAwesomeIcon icon={faWrench} /></Button>
+                    <div className="wing" />
                 </div>
             </div>
         );

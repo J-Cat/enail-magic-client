@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.jcat.enailmagicclient" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>enail-magic-client</name>
+    <name>e-Nail Magic</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        e-Nail Magic - Make your e-Nail better!  Used to enhance your current e-nail with profiles/scripts for up-temp procedures and others.
     </description>
     <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+        J-Cat
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -22,13 +22,15 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
-    <preference name="StatusBarOverlaysWebView" value="false" />
-    <preference name="StatusBarBackgroundColor" value="#000000" />
-    <preference name="StatusBarStyle" value="lightcontent" />
     <plugin name="cordova-plugin-ble-central" spec="^1.2.2">
         <variable name="BLUETOOTH_USAGE_DESCRIPTION" value="Communicate with Raspberry Pi e-Nail Magic Device" />
     </plugin>
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#000000" />
+    <preference name="StatusBarStyle" value="lightcontent" />
+    <preference name="DisallowOverscroll" value="true" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <engine name="ios" spec="^4.5.5" />
 </widget>

@@ -27,7 +27,7 @@ export const bleMiddleware = (store: Store<IEMStore>) => <A extends EMAction>(ne
                     ble.writeWithoutResponse(
                         bleSettings.deviceId, EMConstants.EM_SERVICE_UUID, action.uuid, 
                         stringToArrayBuffer(JSON.stringify(
-                            [`0x${action.type.toString(16)}`, action.key]
+                            [action.type, !!action.key ? action.key : action.value]
                         ))
                     );
                 }

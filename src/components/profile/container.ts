@@ -18,7 +18,7 @@ import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Profile } from './profile';
 import { IProfile } from '../../models/IProfile';
-import { setProfile, setStatus } from '../../modules/enailMagic';
+import { setProfile, runProfile } from '../../modules/enailMagic';
 
 export namespace ProfileProps {
     export interface IStateProps {
@@ -28,11 +28,12 @@ export namespace ProfileProps {
 
     export interface IDispatchProps {
         setProfile: (index: number) => void;
-        setStatus: (status: boolean) => void;
+        runProfile: (index: number) => void;
     }
 
     export interface IOwnProps {
         profile: IProfile;
+        profileIndex: number;
     }
 
     export interface IProps extends RouteComponentProps<any>, IStateProps, IDispatchProps, IOwnProps {
@@ -56,8 +57,8 @@ function mapStateToProps(state: IEMStore, ownProps: ProfileProps.IOwnProps) {
 
 function mapDispatchToProps(dispatch: (...args: any[]) => void) {
     return {
-        setProfile: (index: number) => dispatch(setProfile),
-        setStatus: (status: boolean) => dispatch(setStatus)
+        setProfile: (index: number) => dispatch(setProfile(index)),
+        runProfile: (index: number) => dispatch(runProfile(index))
     };
 }
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Button, Carousel, WingBlank, Card, Flex } from 'antd-mobile';
+import { Button, Carousel, WingBlank, Card, Flex, ActivityIndicator } from 'antd-mobile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { Profile } from '../../components/profile';
 import { Temperature } from '../../components/temperature';
@@ -13,8 +13,18 @@ import thc from '../../assets/thc.svg';
 import { HomeProps } from './container';
 
 export class Home extends React.Component<HomeProps.IProps, HomeProps.IState> {
+    // private carousel: Carousel;
+
     constructor(props: HomeProps.IProps) {
         super(props);
+        this.state = {
+            commandRunning: false,
+            currentIndex: 0
+        };
+    }
+
+    protected beforeChange = (from: number, to: number) => {
+        this.props.setProfile(to);
     }
 
     public render() {
@@ -26,20 +36,27 @@ export class Home extends React.Component<HomeProps.IProps, HomeProps.IState> {
                             <Carousel
                                 autoplay={false}
                                 infinite={true}
-                                beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-                                afterChange={index => console.log('slide to', index)}
-                                className="Carousel">
-                                {this.props.profiles.map((profile, index) => {
-                                    return (
-                                        <Card key={index} style={{ backgroundImage: `url(${thc})` }}>
-                                            <div className='wing' />
-                                            <div className='content'>
-                                                <Profile profile={profile} />
-                                            </div>
-                                            <div className='wing' />
-                                        </Card>
-                                    );
-                                })}
+                                beforeChange={this.beforeChange}
+                                className="Carousel"
+                                selectedIndex={this.props.currentProfileIndex}
+                                >
+                                {this.props.profiles.length === 0 ? (
+                                    <Card key={-1} style={{ backgroundImage: `url(${thc})` }}>
+                                        <div className='wing' />
+                                        <div className='content'>
+                                            <ActivityIndicator />
+                                        </div>
+                                        <div className='wing' />
+                                    </Card>
+                                ) : (this.props.profiles.map((profile, index) => (
+                                    <Card key={index} style={{ backgroundImage: `url(${thc})` }}>
+                                        <div className='wing' />
+                                        <div className='content'>
+                                            <Profile profile={profile} profileIndex={index} />
+                                        </div>
+                                        <div className='wing' />
+                                    </Card>
+                                )))}
                             </Carousel>
                         </WingBlank>
                     </div>
@@ -55,7 +72,7 @@ export class Home extends React.Component<HomeProps.IProps, HomeProps.IState> {
                         </WingBlank>
                     </div>
                 </Flex>
-                <Button className="add-profile-button"><FontAwesomeIcon icon={faPlusCircle} /></Button>
+                <Button className="add-profile-button"><FontAwesomeIcon icon={faPlus} /></Button>
             </div>
         );
     }

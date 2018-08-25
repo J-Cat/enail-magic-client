@@ -44,17 +44,17 @@ export const getProfiles: ActionCreator<IEMBleChunkedRequestAction> = () => {
 export const setProfile: ActionCreator<IEMBleAction> = (index:number) => {
     return {
         type: EMConstants.EM_FROMCLIENT_SET_PROFILE,
-        uuid: EMConstants.EM_PROFILES_CHARACTERISTIC_UUID,
+        uuid: EMConstants.EM_CHARACTERISTIC_UUID,
         value: index
     };
 
 }
 
-export const setStatus: ActionCreator<IEMBleAction> = (status: boolean) => {
+export const runProfile: ActionCreator<IEMBleAction> = (index: number) => {
     return {
-        type: EMConstants.EM_FROMCLIENT_SETSTATUS,
+        type: EMConstants.EM_FROMCLIENT_RUNPROFILE,
         uuid: EMConstants.EM_CHARACTERISTIC_UUID,
-        value: status ? 1 : 0
+        value: index
     }
 }
 

@@ -8,7 +8,7 @@ export const EM_CONNECT_BLE_ACTION: string = 'EM/CONNECTBLE';
 export const EM_UPDATE_BLE_CONNECTION: string = 'EM/UPDATE_BLE_CONNECTION';
 
 export const EM_FROMCLIENT_SET_PROFILE: number = 0x02;
-export const EM_FROMCLIENT_SETSTATUS: number = 0x03;
+export const EM_FROMCLIENT_RUNPROFILE: number = 0x03;
 export const EM_FROMCLIENT_GETPROFILES: number = 0x04;
 
 export const EM_FROMSERVER_DATA: string = "0x01";

@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 
-export type EMAction = IEMBleAction & IEMConnectBleAction & IEMUpdateBleConnectionAction & IEMBleDataAction & IEMBleChunkedAction;
+export type EMAction = IEMBleAction & IEMConnectBleAction & IEMUpdateBleConnectionAction & IEMBleDataAction & IEMBleChunkedAction & IEMBleSetValueAction;
 
 export interface IEMConnectBleAction extends IEMBleAction {
     connectionPromise: Promise<{deviceId: string, characteristics: string[]}>;
