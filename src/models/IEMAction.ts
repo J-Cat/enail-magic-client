@@ -28,3 +28,7 @@ export interface IEMBleChunkedAction extends IEMBleAction {
     complete: boolean;
     chunk: string;
 }
+
+export interface IEMBleSetValueAction extends IEMBleAction {
+    value: number;
+}

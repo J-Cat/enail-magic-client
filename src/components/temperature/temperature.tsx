@@ -25,9 +25,7 @@ export class Temperature extends React.Component<TemperatureProps.IProps, Temper
 
     public render() {
         return (
-            <div className="Temperature">
-                {this.props.temperature}
-            </div>
+                <div className='temperature'>{this.props.temperature}</div>
         );
     }
 }

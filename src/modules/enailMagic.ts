@@ -8,7 +8,7 @@ import { Guid } from '../helpers/guid';
 const initialState: IEMState = {
     data: {
         temperature: 0,
-        status: 0,
+        status: false,
         profileIndex: 0,
         stepIndex: 0
     },
@@ -39,6 +39,23 @@ export const getProfiles: ActionCreator<IEMBleChunkedRequestAction> = () => {
         uuid: EMConstants.EM_PROFILES_CHARACTERISTIC_UUID,
         key: Guid.newGuid()
     };
+}
+
+export const setProfile: ActionCreator<IEMBleAction> = (index:number) => {
+    return {
+        type: EMConstants.EM_FROMCLIENT_SET_PROFILE,
+        uuid: EMConstants.EM_PROFILES_CHARACTERISTIC_UUID,
+        value: index
+    };
+
+}
+
+export const setStatus: ActionCreator<IEMBleAction> = (status: boolean) => {
+    return {
+        type: EMConstants.EM_FROMCLIENT_SETSTATUS,
+        uuid: EMConstants.EM_CHARACTERISTIC_UUID,
+        value: status ? 1 : 0
+    }
 }
 
 export const enailMagicReducer = (state: IEMState = initialState, action: EMAction) => {

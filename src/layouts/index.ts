@@ -1,7 +1,7 @@
 /*
- * File: c:\enail-magic-client\src\variables.less
+ * File: c:\enail-magic-client\src\layouts\index.ts
  * Project: c:\enail-magic-client
- * Created Date: Thursday August 23rd 2018
+ * Created Date: Friday August 24th 2018
  * Author: J-Cat
  * -----
  * Last Modified:
@@ -13,5 +13,6 @@
  * -----
  * Copyright (c) 2018
  */
- @small: ~"only screen and (max-width: 479px)";
- @medium: ~"only screen and (max-width: 1024px) and (min-width: 480px)";
+import CoreLayout from './container';
+
+export { CoreLayout };

@@ -13,65 +13,128 @@
  * -----
  * Copyright (c) 2018
  */
- @import '../../variables.less';
+@import '../../styles/variables.less';
 
-.Home {
+.home-container {
     height: 100%;
+    overflow: hidden;
+    .add-profile-button {
+        z-index: 10;
+        position: absolute !important;
+        width: 40px;
+        height: 40px;
+        svg {
+            height: 40px;
+            width: 40px;
+            color: @text-color;
+        }
 
-    .row1 {
-        padding: 80px;
-        flex: 1;
-    }
-    .row2{
-        padding: 30px;
-        flex: 0;
-        .am-card {
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center;
+        &::before {
+            border: none !important;
+        }
+
+        @media @screen-xs-media {
+            top: 20px;
+            right: 30px;
+        }
+
+        @media @screen-sm-media {
+            top: 30px;
+            right: 55px;
+        }
+
+        @media @screen-md-media {
+            top: 40px;
+            right: 65px;
         }
     }
-    .am-wingblank {
-        height: 100% !important;
-    }
-    .am-card {
-        height: 100% !important;
-        text-align: center;
-        align-content: stretch;
-        align-items: center;
-        flex-wrap: nowrap;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        .wing {
-            flex: 1;
+
+    .home {
+        height: 100%;
+        color: @color-text-base;
+        @media @landscape {
+    //        flex-direction: row !important;
         }
-        .content {
-            flex: 0;
-        }
-    }
-    .am-carousel {
-        height: 100% !important;
-        .slider-frame {
-            height: 100% !important;
-            .slider-list {
-                height: 100% !important;
-                .slider-slide {
-                    height: 100% !important;
-                }
+
+        @media @screen-xs-media {
+            .row1 {
+                padding: 10px 5px 5px 5px;
+            }
+            .row2 {
+                padding: 5px 5px 10px 5px;
             }
         }
-    }
 
-    @media @small {
-        .row1,.row2 {
-            padding: 10px;
+        @media @screen-sm-media {
+            .row1 {
+                padding: 20px 20px 10px 20px;
+            }
+            .row2 {
+                padding: 10px 20px 30px 20px;
+            }
         }
-    }
 
-    @media @medium {
-        .row1,.row2 {
-            padding: 20px;
+        @media @screen-md-media {
+            .row1 {
+                padding: 30px 30px 15px 30px;
+            }
+            .row2 {
+                padding: 15px 30px 30px 30px;
+            }
+        }
+
+        .row1 {
+            flex: 1;
+            .am-card {
+                background-repeat: repeat;
+                background-size: contain;
+                background-position: center;    
+            }
+        }
+        .row2{
+            flex: 0;
+            .am-card {
+                min-height: 150px !important;
+                @media @short {
+                    min-height: 100px !important;
+                }
+                @media @reallyshort {
+                    min-height: 80px !important;
+                }
+
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: center;
+            }
+        }
+        .am-wingblank {
+            height: 100% !important;
+        }
+        .am-card {
+            height: 100% !important;
+            text-align: center;
+            align-content: stretch;
+            align-items: center;
+            flex-wrap: nowrap;
+            direction: column;
+            .wing {
+                flex: 1;
+            }
+            .content {
+                flex: 0;
+            }
+        }
+        .am-carousel {
+            height: 100% !important;
+            .slider-frame {
+                height: 100% !important;
+                .slider-list {
+                    height: 100% !important;
+                    .slider-slide {
+                        height: 100% !important;
+                    }
+                }
+            }
         }
     }
 }

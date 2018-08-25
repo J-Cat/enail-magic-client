@@ -41,7 +41,7 @@ export function configureStore(initialState?: IEMStore): Store<IEMStore> {
         });
         store.dispatch({
             type: EMConstants.EM_FROMSERVER_DATA,
-            data: [72, 0, 0, 0]
+            data: [72, 1, 0, 0]
         });
     }
 

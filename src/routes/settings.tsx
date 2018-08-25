@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Drawer, NavBar, Icon, List } from 'antd-mobile';
 
-export class Profiles extends React.Component<{}, { docked: boolean, [key: string]: boolean }> {
+export class Settings extends React.Component<{}, { docked: boolean, [key: string]: boolean }> {
     constructor(props: {}) {
         super(props);
         this.state = {

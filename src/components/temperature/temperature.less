@@ -13,18 +13,19 @@
  * -----
  * Copyright (c) 2018
  */
- @import '../../variables.less';
+ @import '../../styles/variables.less';
 
- .Temperature {
-    @media @small {
-        font-size: 2em;
+ .temperature {
+    @media @screen-sm-media {
+        font-size: @font-size-base * 3;
     }
-
-    @media @medium {
-        font-size: 4em;
+    @media @screen-xs-media {
+        font-size: @font-size-base * 2;
     }
-
-    font-size: 6em;
-    font-weight: bold;
-    color: gray;
+    @media @short {
+        font-size: @font-size-base * 2;
+    }
+    @media @reallyshort {
+        font-size: @font-size-base * 1.5 ;
+    }
 }

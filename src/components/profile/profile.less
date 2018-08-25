@@ -13,6 +13,94 @@
  * -----
  * Copyright (c) 2018
  */
- .progressGradient .progressGradient-path {
-    stroke: url(#profileSvg);
-  }
+@import '../../styles/variables.less';
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    align-items: stretch;
+    .profile-progress {
+        flex: 0;
+        .ant-progress {
+            @media @screen-lg-media {
+                padding: 40px;
+            }
+            @media @screen-md-media {
+                padding: 30px;
+            }
+            @media @screen-sm-media {
+                padding: 20px;
+            }
+            &-circle-path {
+                stroke: @primary-color;
+                stroke-linecap: butt;
+            }
+        }
+        .status-button-container {
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0xp;
+            height: 100%;
+            width: 100%;
+            background-color: transparent;
+            .status-button {
+                position: relative; 
+                left: 50%;
+                top: calc(50% - 28px);
+                transform: translate(-50%,-50%);                
+                width: 60px;
+                height: 60px;
+                svg {
+                    height: 60px;
+                    width: 60px;
+                    color: @text-color;
+                }
+
+            }
+            .status-button-on {
+                svg {
+                    color: @primary-color
+                }
+            }
+        }
+    }
+    .profile-content {
+        flex: 1;
+        height: 50px;
+        
+        font-size: @font-size-base * 3;
+        @media @screen-xs-media {
+            font-size: @font-size-base * 2;
+        }
+        @media @short {
+            font-size: @font-size-base * 2;
+        }
+        @media @reallyshort {
+            font-size: @font-size-base * 1.5 ;
+        }
+
+        transform: translateX(20px);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &-title {
+            padding-right: 10px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            flex: 0;
+        }
+        &-button {
+            margin:5px;
+            flex: 1;
+        }
+    }
+    .am-button {
+        width: 40px;
+        &::before {
+            border: none !important;
+        }
+    }
+}
