@@ -1,4 +1,4 @@
-import { IProfile } from './IProfile';
+import { IProfile } from './profile';
 import { IEMData } from './IEMData';
 
 export interface IEMState {
@@ -8,4 +8,5 @@ export interface IEMState {
         [key: string]: string;
     },
     readonly connected: boolean;
+    readonly connecting: boolean;
 }

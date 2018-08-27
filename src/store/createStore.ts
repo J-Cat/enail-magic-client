@@ -10,9 +10,8 @@ import { bleMiddleware } from './bleMiddleware';
 import { connectBle } from '../modules/enailMagic';
 import { Guid } from '../helpers/guid';
 import { IEMStore } from '../models/IEMStore';
-import { IProfile } from '../models/IProfile';
+import { IProfile } from '../models/profile';
 // import { composeWithDevTools } from 'remote-redux-devtools';
-
 
 export function configureStore(initialState?: IEMStore): Store<IEMStore> {
     const middlewares: any = [
@@ -22,7 +21,9 @@ export function configureStore(initialState?: IEMStore): Store<IEMStore> {
     const composeEnhancers = (typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
     // const composeEnhancers = composeWithDevTools({ realtime: true, port: 8000, hostname: '172.19.0.29' })
 
-    const newState = initialState || {} as IEMStore;
+    // import saved profiles from cache (speed up load time)
+    const newState = importLocalStorage(initialState || {} as IEMStore);
+
     const store: Store<IEMStore> = createStore(makeRootReducer, newState,         
         composeEnhancers(applyMiddleware(...middlewares))
     );
@@ -32,7 +33,7 @@ export function configureStore(initialState?: IEMStore): Store<IEMStore> {
     if (window.cordova) {
         store.dispatch(connectBle());
     } else {
-        const profiles: IProfile[] = require('../models/profiles.json');
+        const profiles: IProfile[] = require('../models/profile/profiles.json');
         store.dispatch({
             type: EMConstants.EM_FROMSERVER_PROFILES,
             complete: true,
@@ -43,8 +44,32 @@ export function configureStore(initialState?: IEMStore): Store<IEMStore> {
             type: EMConstants.EM_FROMSERVER_DATA,
             data: [72, 1, 0, 0]
         });
+        store.dispatch({
+            type: EMConstants.EM_UPDATE_BLE_CONNECTION,
+            connectionStatus: true
+        });
     }
 
     return store;
 
+}
+
+const importLocalStorage = (initialState: IEMStore): IEMStore => {
+    try {
+        const profileStr: string | null = localStorage.getItem('EMPROFILE');
+        if (!!profileStr && profileStr !== null) {
+            const s: string = Buffer.from(profileStr, 'base64').toString('utf8');
+            return Object.assign({}, initialState, {
+                profiles: JSON.parse(s)
+            });
+        }
+    } catch (e) { // error occured ... delete profile from local storage (just cache anyways)
+        console.log(e);
+        try {
+            localStorage.removeItem('EMPROFILE');
+        } catch (e1) {
+            console.log(e1);
+        }
+    }
+    return initialState;
 }

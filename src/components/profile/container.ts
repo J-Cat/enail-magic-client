@@ -17,7 +17,7 @@ import { IEMStore } from '../../models/IEMStore';
 import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Profile } from './profile';
-import { IProfile } from '../../models/IProfile';
+import { IProfile } from '../../models/profile';
 import { setProfile, runProfile } from '../../modules/enailMagic';
 
 export namespace ProfileProps {
@@ -48,10 +48,7 @@ export namespace ProfileProps {
 function mapStateToProps(state: IEMStore, ownProps: ProfileProps.IOwnProps) {
     return {
         status: state.state.data.status,
-        percentComplete: (state.state.data.status === true ? 
-            Math.round(state.state.data.stepIndex / state.state.profiles[state.state.data.profileIndex].steps.length * 10) / 10
-            : 0
-        )
+        percentComplete: state.state.data.percentComplete
     };
 }
 

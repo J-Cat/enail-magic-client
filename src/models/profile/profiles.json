@@ -1,0 +1,228 @@
+[
+    {
+        "title": "D-Nail 95",
+        "steps": [
+            {
+                "type": "action", "onoff": false
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 25, "g": 0, "b": 0, "flash": 1 },
+                "icon": { "icon": "thermometerDown", "flash": 1 },
+                "sounds": { "start": "bell" }
+            },
+            {
+                "type": "conditional",
+                "temperature": -95, "direction": "DOWN",
+                "delays": {
+                    "start": 0, "timeout": 60, "end": 3
+                },
+                "message": "Dropping ... wait ...",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "action", "onoff": true
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "drop", "flash": 1 }
+            },
+            {
+                "type": "conditional",
+                "temperature": -70, "direction": "UP",
+                "delays": { "start": 0, "timeout": 60, "end": 0 },
+                "message": "Start inhaling!"
+            },
+            {
+                "type": "action", "onoff": false
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 0 },
+                "icon": { "icon": "drop", "flash": 0 },
+                "delays": { "end": 15 }
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 25, "g": 0, "b": 0, "flash": 0 },
+                "icon": { "icon": "cloud", "flash": 0 },
+                "sounds": { "end": "complete" }
+            },
+            {
+                "type": "conditional",
+                "temperature": -70, "direction": "DOWN",
+                "delays": { "start": 5, "timeout": 60, "end": 3 },
+                "message": "(Exhale ...)",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "action", "onoff": true,
+                "message": "Time to go again!"
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "drop", "flash": 1 }
+            },
+            {
+                "type": "conditional",
+                "temperature": 0, "direction": "UP",
+                "delays": { "start": 0, "timeout": 60, "end": 5 },
+                "message": "(Exhale ...)",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "feedback",
+                "icon": { "icon": "cloud", "flash": 1 },
+                "delays": { "end": 10 }
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 25, "b": 0, "flash": 0 },
+                "icon": { "icon": "cloud", "flash": 0 },
+                "sounds": { "end": "complete" }
+            }
+        ]
+    },
+    {
+        "title": "D-Nail 75",
+        "steps": [
+            {
+                "type": "action", "onoff": false
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 25, "g": 0, "b": 0, "flash": 1 },
+                "icon": { "icon": "thermometerDown", "flash": 1 },
+                "sounds": { "start": "bell" }
+            },
+            {
+                "type": "conditional",
+                "temperature": -75, "direction": "DOWN",
+                "delays": {
+                    "start": 0, "timeout": 60, "end": 3
+                },
+                "message": "Dropping ... wait ...",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "action", "onoff": true
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "drop", "flash": 1 }
+            },
+            {
+                "type": "conditional",
+                "temperature": -45, "direction": "UP",
+                "delays": { "start": 0, "timeout": 60, "end": 0 },
+                "message": "Start inhaling!"
+            },
+            {
+                "type": "action", "onoff": false
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 0 },
+                "icon": { "icon": "drop", "flash": 0 },
+                "delays": { "end": 15 }
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 25, "g": 0, "b": 0, "flash": 0 },
+                "icon": { "icon": "cloud", "flash": 0 },
+                "sounds": { "end": "complete" }
+            },
+            {
+                "type": "conditional",
+                "temperature": -45, "direction": "DOWN",
+                "delays": { "start": 5, "timeout": 60, "end": 3 },
+                "message": "(Exhale ...)",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "action", "onoff": true,
+                "message": "Time to go again!"
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "drop", "flash": 1 }
+            },
+            {
+                "type": "conditional",
+                "temperature": 0, "direction": "UP",
+                "delays": { "start": 0, "timeout": 60, "end": 5 },
+                "message": "(Exhale ...)",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "feedback",
+                "icon": { "icon": "cloud", "flash": 1 },
+                "delays": { "end": 10 }
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 25, "b": 0, "flash": 0 },
+                "icon": { "icon": "cloud", "flash": 0 },
+                "sounds": { "end": "complete" }
+            }
+        ]
+    },
+    {
+        "title": "VROD",
+        "steps": [
+            {
+                "type": "action", "onoff": false
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "drop", "flash": 1 },
+                "sounds": { "start": "bell" }
+            },
+            {
+                "type": "conditional",
+                "temperature": -85, "direction": "DOWN",
+                "delays": {
+                    "start": 0, "timeout": 60, "end": 0
+                },
+                "message": "Go!",
+                "sounds": { "end": "bell" }
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "cloud", "flash": 1 },
+                "delays": { "end": 15 }
+            },
+            {
+                "type": "action", "onoff": true
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 0, "b": 25, "flash": 1 },
+                "icon": { "icon": "drop", "flash": 1 }
+            },
+            {
+                "type": "conditional",
+                "temperature": 0, "direction": "UP",
+                "delays": { "start": 0, "timeout": 60, "end": 0 },
+                "message": "Go again!"
+            },
+            {
+                "type": "feedback",
+                "icon": { "icon": "cloud", "flash": 1 },
+                "delays": { "end": 10 }
+            },
+            {
+                "type": "feedback",
+                "led": { "r": 0, "g": 25, "b": 0, "flash": 0 },
+                "icon": { "icon": "cloud", "flash": 0 },
+                "sounds": { "end": "complete" }
+            }
+        ]
+    }
+]

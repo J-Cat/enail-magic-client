@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import { TabBar } from 'antd-mobile';
+import { TabBar, PullToRefresh } from 'antd-mobile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faCogs } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,10 +8,10 @@ import { Routes } from '../routes';
 
 import './coreLayout.less';
 
-import { ICoreLayoutState } from './container';
+import { CoreLayoutProps } from './container';
 
-export class CoreLayout extends React.Component<RouteComponentProps<any>, ICoreLayoutState> {
-    constructor(props: any) {
+export class CoreLayout extends React.Component<CoreLayoutProps.IProps, CoreLayoutProps.IState> {
+    constructor(props: CoreLayoutProps.IProps) {
         super(props);
 
         let index: number = 0;
@@ -28,7 +27,10 @@ export class CoreLayout extends React.Component<RouteComponentProps<any>, ICoreL
         }
 
         this.state = {
-            selectedTab: index
+            selectedTab: index,
+            refreshing: false,
+            down: true,
+            height: window.innerHeight
         };
     }
 
@@ -39,9 +41,41 @@ export class CoreLayout extends React.Component<RouteComponentProps<any>, ICoreL
         history.push(routeName);
     }
 
+    public componentWillMount() {
+        window.addEventListener('resize', this.resize);
+    }
+
+    public componentWillUnmount() {
+        window.removeEventListener('resize', this.resize);
+    }
+
+    public resize = () => {
+        this.setState({
+            height: window.innerHeight,
+        })
+    }
+
     public render() {
         return (
-            <div className='core-layout'>
+            <PullToRefresh
+                getScrollContainer={() => document.documentElement}
+                distanceToRefresh={50}
+                damping={60}
+                style={{
+                    height: this.state.height
+                }}
+                indicator={this.state.down ? {} : { activate: '1', deactivate: 'release to refresh' }}
+                direction={this.state.down ? 'down' : 'up'}
+                refreshing={this.props.connecting}
+                onRefresh={() => {
+                    this.props.connectBle();
+                    this.setState({ refreshing: true });
+                    setTimeout(() => {
+                        this.setState({ refreshing: false });
+                    }, 1000);
+                }}
+            >
+                <div className="tab-bar-container" style={{height: this.state.height}}>
                 <TabBar unselectedTintColor='#fff' tintColor='#7ABA71'>
                     <TabBar.Item 
                         title="Home" key="Home" 
@@ -60,7 +94,8 @@ export class CoreLayout extends React.Component<RouteComponentProps<any>, ICoreL
                         <Routes />
                     </TabBar.Item>
                 </TabBar>
-            </div>
+                </div>
+            </PullToRefresh>
         );
     }
 }

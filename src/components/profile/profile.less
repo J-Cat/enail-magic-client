@@ -22,17 +22,10 @@
     align-content: space-between;
     align-items: stretch;
     .profile-progress {
+        width: 100%;
         flex: 0;
         .ant-progress {
-            @media @screen-lg-media {
-                padding: 40px;
-            }
-            @media @screen-md-media {
-                padding: 30px;
-            }
-            @media @screen-sm-media {
-                padding: 20px;
-            }
+            padding: 20px;
             &-circle-path {
                 stroke: @primary-color;
                 stroke-linecap: butt;
@@ -72,15 +65,15 @@
         flex: 1;
         height: 50px;
         width: 100%;
-        font-size: @font-size-base * 3;
+        font-size: @font-size-base * 2;
         @media @screen-xs-media {
-            font-size: @font-size-base * 2;
+            font-size: @font-size-base * 1;
         }
         @media @short {
-            font-size: @font-size-base * 2;
+            font-size: @font-size-base * 1;
         }
         @media @reallyshort {
-            font-size: @font-size-base * 1.5 ;
+            font-size: @font-size-base * .75 ;
         }
 
         //transform: translateX(20px);

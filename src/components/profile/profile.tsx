@@ -48,20 +48,31 @@ export class Profile extends React.Component<ProfileProps.IProps, ProfileProps.I
     }
 
     private getProgressWidth = (): number => {
-        const vUsedSpace: number = 60 + (
-            window.innerHeight <= 400 ? 80 : (
-                window.innerHeight <= 500 ? 120 : 150
-            )
-        );
-        const padding: number[] = window.innerWidth <= 480 ? [10, 90 + vUsedSpace] : (
-            window.innerWidth <= 1024 ? [20, 110 + vUsedSpace] : [30, vUsedSpace]
-        );
+        const isPortrait: boolean = window.innerHeight > window.innerWidth;
+
+        const availWidth: number = window.innerWidth - (isPortrait ? 16 : 166) - 50;
+        const availHeight: number = window.innerHeight - (isPortrait ? (
+            window.innerHeight <= 400 ? 80 : (window.innerHeight <= 500 ? 100 : 150)
+        ) : 76) - 100;
+
+        return Math.min(availWidth, availHeight) - 100;
         
-        if (window.innerWidth - padding[0] < window.innerHeight - padding[1]) {
-            return Math.max((window.innerWidth - padding[0])  - padding[1], 125);
-        } else {
-            return Math.max((window.innerHeight - padding[1]) - padding[1], 125);
-        }
+//         const vUsedSpace: number = 60 + (
+//             window.innerHeight <= 400 ? 80 : (
+//                 window.innerHeight <= 500 ? 120 : 150
+//             )
+//         );
+//         const padding: number[] = window.innerWidth <= 480 ? [10, 90 + vUsedSpace] : (
+//             window.innerWidth <= 1024 ? [20, 110 + vUsedSpace] : [30, vUsedSpace]
+//         );
+        
+// //        alert(window.innerWidth);
+// //        alert(window.innerHeight);
+//         if (window.innerWidth - padding[0] < window.innerHeight - padding[1]) {
+//             return Math.max((window.innerWidth - padding[0])  - padding[1], 125);
+//         } else {
+//             return Math.max((window.innerHeight - padding[1]) - padding[1], 125);
+//         }
     }
 
     private getStatusIcon(): JSX.Element {
@@ -108,7 +119,7 @@ export class Profile extends React.Component<ProfileProps.IProps, ProfileProps.I
             <div className="profile">
                 <div className='profile-progress'>
                     <Progress
-                        percent={this.props.percentComplete}
+                        percent={this.props.percentComplete*100}
                         type="circle"
                         strokeWidth={14}
                         width={this.state.progressWidth}

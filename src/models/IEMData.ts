@@ -3,4 +3,6 @@ export interface IEMData {
     readonly status: boolean;
     readonly profileIndex: number;
     readonly stepIndex: number;
+    readonly percentComplete: number;
+    readonly stepPercentComplete: number;
 }

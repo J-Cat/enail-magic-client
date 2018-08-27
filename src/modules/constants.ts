@@ -5,6 +5,7 @@ export const EM_PROFILES_CHARACTERISTIC_UUID: string = "10AB3AB3-0F41-408E-A99E-
 
 // actions
 export const EM_CONNECT_BLE_ACTION: string = 'EM/CONNECTBLE';
+export const EM_DISCONNECT_BLE_ACTION: string = 'EM/DISCONNECTBLE';
 export const EM_UPDATE_BLE_CONNECTION: string = 'EM/UPDATE_BLE_CONNECTION';
 
 export const EM_FROMCLIENT_SET_PROFILE: number = 0x02;

@@ -1,6 +1,6 @@
 import { Dispatch, Store } from 'redux';
 import { arrayBufferToString, stringToArrayBuffer } from '../helpers/arrayBuffer';
-import { updateBleConnection, getProfiles, connectBle } from '../modules/enailMagic';
+import { updateBleConnection, getProfiles, connectBle, disconnectBle } from '../modules/enailMagic';
 import { IEMStore } from '../models/IEMStore';
 
 import * as EMConstants from '../modules/constants';
@@ -54,18 +54,18 @@ const connectBleAdapter = (store: Store<IEMStore>): Promise<{deviceId: string, c
                   ble.startScan([EMConstants.EM_SERVICE_UUID], (data: BLECentralPlugin.PeripheralData) => {
                     ble.stopScan();
                     const deviceId: string = data.id;
-                    
-                    ble.connect(deviceId, (extendedData: BLECentralPlugin.PeripheralDataExtended) => {
+
+                    ble.autoConnect(deviceId, (extendedData: BLECentralPlugin.PeripheralDataExtended) => {
                         const characteristics: string[] = extendedData.characteristics.map((characteristic) => (
                             characteristic.characteristic
                         ));
 
                         resolve({
-                        characteristics,
-                        deviceId
+                            characteristics,
+                            deviceId
                         });
                     }, () => {
-                        throw new Error('Error connecting to Bluetooth LE device.');
+                        store.dispatch(disconnectBle())
                     });
                   }, () => {
                     ble.stopScan();
@@ -81,8 +81,10 @@ const connectBleAdapter = (store: Store<IEMStore>): Promise<{deviceId: string, c
                   store.dispatch(connectBle(store));
                 }, 
                 2000);
-                console.log('No Bluetooth LE available.  Trying again in a couple seconds.');
+                reject({ error: 0, message: 'No Bluetooth LE available.  Trying again in a couple seconds.'});
                 // resolve({ deviceId: '', characteristics: [] });
+          } else {
+            reject({ error: 1, message: `Failed to connect to eNail Magic Controller over Bluetooth LE:  ${e}`});
           }
       }
   });
@@ -121,6 +123,9 @@ const connectBleAdapter = (store: Store<IEMStore>): Promise<{deviceId: string, c
         store.dispatch(getProfiles());
 //      api.dispatch(getSettings());
     }
+  }).catch(({error, message}) => {
+      console.log(message);
+      store.dispatch(updateBleConnection(0));
   });
 
   return blePromise;

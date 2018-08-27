@@ -21,6 +21,7 @@ import { Temperature } from './temperature';
 export namespace TemperatureProps {
     export interface IStateProps {        
         temperature: number;
+        connected: boolean;
     }
 
     export interface IDispatchProps {
@@ -39,6 +40,7 @@ export namespace TemperatureProps {
 function mapStateToProps(state: IEMStore, ownProps: TemperatureProps.IOwnProps) {
     return {
         temperature: state.state.data.temperature,
+        connected: state.state.connected
     };
 }
 
